@@ -1,0 +1,74 @@
+lane :build do
+  case git_branch
+  when "develop"
+    develop
+  when "master"
+    master
+  end
+end
+
+lane :develop do
+  scan(code_coverage: true, open_report: true)
+
+  bump_type = "patch"
+  commit = last_git_commit
+
+  if commit[:message].downcase.include?("feature")
+    bump_type = "minor"
+  end
+
+  version = version_bump_podspec(path: "Firelite.podspec", bump_type: bump_type)
+
+  git_commit(path: "Firelite.podspec", message: "Version bump [skip ci]")
+  push_to_git_remote(
+    remote: "https://#{ENV["GITHUB_OAUTH_TOKEN"]}@github.com/FireliteTeam/Firelite",
+    remote_branch: "develop"
+  )
+
+  slack(
+    slack_url: "https://hooks.slack.com/services/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",
+    message: "Develop built successfully!",
+    channel: "#travis",
+    payload: {
+      "Build Date" => Time.new.to_s,
+      "Built by" => "Travis CI [DEVELOP]",
+      "Merged commit" => commit[:message],
+    }
+  )
+end
+
+lane :master do
+  pod_lib_lint
+  version = version_get_podspec(path: "Firelite.podspec")
+
+  set_github_release(
+    repository_name: "FireliteTeam/Firelite",
+    api_token: ENV["GITHUB_OAUTH_TOKEN"],
+    name: "Release #{version}",
+    tag_name: version,
+    description: (File.read("../CHANGELOG.md") rescue "No changelog provided"),
+  )
+
+  pod_push
+
+  slack(
+    slack_url: "https://hooks.slack.com/services/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",
+    message: "Firelite release #{version} successfully deployed!",
+    channel: "#travis",
+    username: "Travis",
+    payload: {
+      "Build Date" => Time.new.to_s,
+      "Built by" => "Travis CI [MASTER]",
+    }
+  )
+end
+
+error do |lane, exception|
+  slack(
+    slack_url: "https://hooks.slack.com/services/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",
+    message: exception.message,
+    success: false,
+    username: "Travis",
+    channel: "#travis"
+  )
+end
