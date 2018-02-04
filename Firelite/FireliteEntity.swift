@@ -27,6 +27,16 @@ open class FireliteEntity : NSObject {
         return objects?.first
     }
     
+    public func coreDataSave(method: Method = .insert, context : NSManagedObjectContext, dictionnary : [String:Any], entityName : String = "\(String(describing: type(of: self)).lowercased)s"){
+        
+        switch method {
+        case .insert:
+            saveManyChilds(context: context, dictionnary: dictionnary, entityName: entityName)
+        case .delete :
+            deleteChild(context: context, dictionnary: dictionnary, entityName: entityName)
+        }
+    }
+    
     func saveManyChilds(context : NSManagedObjectContext, dictionnary : [String:Any], entityName : String = "\(String(describing: type(of: self)).lowercased)s"){
         //Save all object if array is detected or just save one
         for snapshot in dictionnary{
