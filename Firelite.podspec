@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'Firelite'
-  s.version = '1.4.0'
+  s.version = '1.4.1'
   s.license = 'MIT'
   s.summary = 'Firebase entities integration for Swift'
   s.homepage = 'https://github.com/FireliteTeam/Firelite'
