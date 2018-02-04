@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD0115852027908900961250 /* FireliteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0115842027908900961250 /* FireliteEntity.swift */; };
 		AD6AD37A20278B2800A17088 /* Firelite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD6AD37020278B2800A17088 /* Firelite.framework */; };
 		AD6AD37F20278B2800A17088 /* FireliteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6AD37E20278B2800A17088 /* FireliteTests.swift */; };
 		AD6AD38120278B2800A17088 /* Firelite.h in Headers */ = {isa = PBXBuildFile; fileRef = AD6AD37320278B2800A17088 /* Firelite.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -23,6 +24,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AD0115842027908900961250 /* FireliteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireliteEntity.swift; sourceTree = "<group>"; };
 		AD6AD37020278B2800A17088 /* Firelite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Firelite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD6AD37320278B2800A17088 /* Firelite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Firelite.h; sourceTree = "<group>"; };
 		AD6AD37420278B2800A17088 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 			children = (
 				AD6AD37320278B2800A17088 /* Firelite.h */,
 				AD6AD37420278B2800A17088 /* Info.plist */,
+				AD0115842027908900961250 /* FireliteEntity.swift */,
 			);
 			path = Firelite;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 				TargetAttributes = {
 					AD6AD36F20278B2800A17088 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					AD6AD37820278B2800A17088 = {
@@ -196,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD0115852027908900961250 /* FireliteEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +339,7 @@
 		AD6AD38520278B2800A17088 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -347,6 +353,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = esgi.Firelite;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -355,6 +362,7 @@
 		AD6AD38620278B2800A17088 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -376,6 +384,7 @@
 		AD6AD38820278B2800A17088 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BGA6953D2T;
 				INFOPLIST_FILE = FireliteTests/Info.plist;
@@ -390,6 +399,7 @@
 		AD6AD38920278B2800A17088 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BGA6953D2T;
 				INFOPLIST_FILE = FireliteTests/Info.plist;
