@@ -26,6 +26,24 @@ open class FireliteEntity : NSObject {
         let objects = try? context.fetch(request)
         return objects?.first
     }
+
+    func saveOneChild(context : NSManagedObjectContext, dictionnary : [String:Any], entityName : String = "\(String(describing: type(of: self)).lowercased)s"){
+        guard let entity = NSEntityDescription.entity(forEntityName: entityName, in: context) else {
+            print("No entity \(entityName) in context \(context.name ?? "")")
+            return
+        }
+
+        guard let id = dictionnary["id"] as? String else {
+            print("No id found in \n\(dictionnary)")
+            return
+        }
+
+        //Initialize managedObject by finding one with id if exist or create it
+        let managedObject = findObjectBy(id: id, context: context, entity: entityName) ?? NSManagedObject(entity: entity, insertInto: context)
+        let attributes = entity.attributesByName.map({ (key: $0.key,value: $0.value.attributeType)})
+        let relationships = entity.relationshipsByName.map({ (key: $0.key,value: $0.value.destinationEntity)})
+        fillManagedObject(context : context, managedObject: managedObject, dictionnary: dictionnary, attributes: attributes, relationships : relationships)
+    }
     
     func fillManagedObject(context : NSManagedObjectContext, managedObject : NSManagedObject, dictionnary : [String:Any], attributes : [(key:String,value:NSAttributeType)], relationships : [(key:String,value:NSEntityDescription?)]){
         //Fill managedobject by checking attributes validity
