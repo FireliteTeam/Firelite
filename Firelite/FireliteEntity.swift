@@ -19,4 +19,12 @@ open class FireliteEntity : NSObject {
         let objectName = String(describing: type(of: self))
         print("init " + objectName + " as FireliteEntity")
     }
+    
+    func findObjectBy(id : String, context : NSManagedObjectContext, entity: String) -> NSManagedObject?{
+        let request: NSFetchRequest<NSManagedObject> = NSFetchRequest(entityName: entity)
+        request.predicate = NSPredicate(format: "%K == %@", "id", id)
+        let objects = try? context.fetch(request)
+        return objects?.first
+    }
+    
 }
