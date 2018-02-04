@@ -26,6 +26,26 @@ open class FireliteEntity : NSObject {
         let objects = try? context.fetch(request)
         return objects?.first
     }
+    
+    func saveManyChilds(context : NSManagedObjectContext, dictionnary : [String:Any], entityName : String = "\(String(describing: type(of: self)).lowercased)s"){
+        //Save all object if array is detected or just save one
+        for snapshot in dictionnary{
+            guard let json = snapshot.value as? [String:Any] else {
+                saveOneChild(context: context, dictionnary: dictionnary, entityName: entityName)
+                return
+            }
+            guard let entity = NSEntityDescription.entity(forEntityName: entityName, in: context) else {
+                print("No entity \(entityName) in context \(context.name ?? "")")
+                return
+            }
+            
+            //Initialize managedObject by finding one with id if exist or create it
+            let managedObject = findObjectBy(id: snapshot.key, context: context, entity: entityName) ?? NSManagedObject(entity: entity, insertInto: context)
+            let attributes = entity.attributesByName.map({ (key: $0.key,value: $0.value.attributeType)})
+            let relationships = entity.relationshipsByName.map({ (key: $0.key,value: $0.value.destinationEntity)})
+            fillManagedObject(context : context, managedObject: managedObject, dictionnary: json, attributes: attributes, relationships: relationships)
+        }
+    }
 
     func saveOneChild(context : NSManagedObjectContext, dictionnary : [String:Any], entityName : String = "\(String(describing: type(of: self)).lowercased)s"){
         guard let entity = NSEntityDescription.entity(forEntityName: entityName, in: context) else {
