@@ -94,6 +94,21 @@ open class FireliteEntity : NSObject {
         print(managedObject)
     }
     
+    func deleteChild(context : NSManagedObjectContext, dictionnary : [String:Any], entityName : String = "\(String(describing: type(of: self)).lowercased)s"){
+        
+        guard let id = dictionnary["id"] as? String else {
+            print("No id found in \n\(dictionnary)")
+            return
+        }
+        guard let managedObject = findObjectBy(id: id, context: context, entity: entityName) else {
+            print("No object \(entityName) found with id \(id)")
+            return
+        }
+        
+        context.delete(managedObject)
+        print("\(managedObject) ----- DELETED")
+    }
+    
     func checkAttributType(type : NSAttributeType, object : Any) -> Bool{
         //return true when is valid
         switch type {
