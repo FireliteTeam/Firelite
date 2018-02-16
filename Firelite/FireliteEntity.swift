@@ -149,7 +149,19 @@ open class FireliteEntity : NSObject {
         case .floatAttributeType:
             return (object as? Float) != nil
         case .integer16AttributeType:
-            return (object as? Int) != nil
+            return (object as? Int16) != nil
+        case .integer32AttributeType:
+            return (object as? Int16) != nil
+        case .integer64AttributeType:
+            return (object as? Int64) != nil
+        case .decimalAttributeType:
+            return (object as? Decimal) != nil
+        case .booleanAttributeType:
+            return (object as? Bool) != nil
+        case .dateAttributeType:
+            return (object as? Date) != nil
+        case .binaryDataAttributeType:
+            return (object as? Data) != nil
             
         default:
             return false
